@@ -1,2 +1,6 @@
 simple-text-editor-frontend.iml
 .idea/
+/coverage
+/build
+/node_modules
+/target
