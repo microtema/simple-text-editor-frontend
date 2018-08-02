@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import SearchInput, {createFilter} from 'react-search-input';
 import './TextFile.css';
 import * as TextFileConstants from './TextFile.constants';
 import * as TextFileActions from './TextFile.actions';
-import Moment from "../Boostrap/Moment/Moment";
+import Moment from '../Boostrap/Moment/Moment';
+
+const KEYS_TO_FILTERS = ['fileName'];
 
 class TextFileComponent extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            searchTerm: ''
+        }
+    }
 
     componentDidMount() {
 
@@ -15,11 +25,16 @@ class TextFileComponent extends Component {
 
     render() {
 
+        const entries = this.props.entries.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+
+
         return (<div className="TextFile">
 
             <nav className="navbar navbar-light bg-light">
                 <form className="form-inline">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <input className="form-control mr-sm-2" value={this.state.searchTerm}
+                           onChange={(e) => this.searchUpdated(e)} type="search" placeholder="Search"
+                           aria-label="Search"/>
                     <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     <button style={{marginLeft: 20}} className="btn btn-outline-success" type="button"
                             onClick={() => this.createEntry()}>Create New File
@@ -42,7 +57,7 @@ class TextFileComponent extends Component {
                 <tbody>
                 {
 
-                    this.props.entries.map((it, index) =>
+                    entries.map((it, index) =>
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td>{it.fileName}</td>
@@ -72,6 +87,11 @@ class TextFileComponent extends Component {
     deleteEntry(entry) {
 
         this.props.actions.deleteEntry(entry);
+    }
+
+    searchUpdated(e) {
+
+        this.setState({searchTerm: e.target.value});
     }
 }
 
