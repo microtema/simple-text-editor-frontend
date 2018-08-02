@@ -7,11 +7,16 @@ export function saveChanges(data) {
     // make async call to api, handle promise, dispatch action when promise is resolved
     return function (dispatch) {
 
-        return RestEndpoint.saveChanges(data).then(id => {
+        return RestEndpoint.saveChanges(data).then(response => {
 
-            console.info('saveChanges', id);
+            if (response.status === 500) {
 
-            dispatch({type: Event.UPDATE, payload: {id: id, fileName: data.fileName, content: data.content}});
+                alert(response.message);
+
+                return;
+            }
+
+            dispatch({type: Event.UPDATE, payload: {id: response, fileName: data.fileName, content: data.content}});
 
             dispatch(push('/'));
 
@@ -26,9 +31,16 @@ export function applyChanges(data) {
     // make async call to api, handle promise, dispatch action when promise is resolved
     return function (dispatch) {
 
-        return RestEndpoint.saveChanges(data).then(id => {
+        return RestEndpoint.saveChanges(data).then(response => {
 
-            data.id = id;
+            if (response.status === 500) {
+
+                alert(response.message);
+
+                return;
+            }
+
+            data.id = response;
 
             dispatch({type: Event.UPDATE, payload: data});
 

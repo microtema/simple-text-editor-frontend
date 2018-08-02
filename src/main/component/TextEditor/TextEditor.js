@@ -18,12 +18,12 @@ class TextEditorComponent extends Component {
         return (<div className="TextEditor">
             <div style={{padding: 10}} onSubmit={() => false}>
                 <div className="form-group">
-                    <input type="text" value={this.props.data.fileName} onChange={(e) => this.handleFileNameChange(e)}
+                    <input type="text" value={this.state.fileName} onChange={(e) => this.handleFileNameChange(e)}
                            className="form-control" placeholder="File Name *.txt"/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleFormControlTextarea1">Example textarea</label>
-                    <textarea value={this.props.data.content} onChange={(e) => this.handleContentChange(e)}
+                    <textarea value={this.state.content} onChange={(e) => this.handleContentChange(e)}
                               className="form-control" id="exampleFormControlTextarea1" rows="30"></textarea>
                 </div>
                 <div className="form-group">
@@ -40,7 +40,9 @@ class TextEditorComponent extends Component {
 
     handleFileNameChange(e) {
 
-        this.setState({fileName: e.target.value});
+        let fileName = e.target.value;
+
+        this.setState({fileName: fileName});
     }
 
     handleContentChange(e) {

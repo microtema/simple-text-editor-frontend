@@ -29,6 +29,18 @@ class RestEndpoint {
         });
     }
 
+    /**
+     *
+     * @param id may not be null
+     * @returns {Promise<Response | never>}
+     */
+    deleteEntry(id) {
+
+        return fetch('/texts/' + id, this.createRequestParameters({
+            method: 'DELETE'
+        }));
+    }
+
     createRequestParameters(params) {
 
         let options = {

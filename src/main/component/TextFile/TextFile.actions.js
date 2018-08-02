@@ -32,3 +32,30 @@ export function createEntry() {
         dispatch(push('/editor'));
     };
 }
+
+export function editEntry(entry) {
+
+    // make async call to api, handle promise, dispatch action when promise is resolved
+    return function (dispatch) {
+
+        dispatch({
+            type: TextEditorEvent.QUERY,
+            payload: entry
+        });
+
+        dispatch(push('/editor'));
+    };
+}
+
+export function deleteEntry(entry) {
+
+    // make async call to api, handle promise, dispatch action when promise is resolved
+    return function (dispatch) {
+
+        return RestEndpoint.deleteEntry(entry.id).then(response => {
+            dispatch({type: Event.REMOVE, payload: entry.id});
+        }).catch(error => {
+            throw error;
+        });
+    };
+}

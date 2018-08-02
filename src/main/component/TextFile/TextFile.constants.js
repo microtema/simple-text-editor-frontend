@@ -7,3 +7,4 @@ const eventNameUtil = new EventNameUtil(COMPONENT_NAME);
 
 export const QUERY = eventNameUtil.query();
 export const UPDATE = eventNameUtil.update();
+export const REMOVE = eventNameUtil.remove();

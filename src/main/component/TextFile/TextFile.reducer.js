@@ -12,6 +12,9 @@ export default function TextFileReducer(state = {entries: []}, action) {
             entries.push(action.payload);
 
             return {entries: entries};
+        case Event.REMOVE :
+
+            return {entries: [...state.entries.filter(it => it.id !== action.payload)]};
         default:
             return state;
     }

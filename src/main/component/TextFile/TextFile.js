@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import './TextFile.css';
 import * as TextFileConstants from './TextFile.constants';
 import * as TextFileActions from './TextFile.actions';
+import Moment from "../Boostrap/Moment/Moment";
 
 class TextFileComponent extends Component {
 
@@ -26,13 +27,14 @@ class TextFileComponent extends Component {
                 </form>
             </nav>
 
-            <table className="table">
+            <table className="table table-striped table-hover">
                 <thead>
                 <tr>
                     <th scope="col" style={{width: 20}}>#</th>
                     <th scope="col">Name</th>
                     <th scope="col" style={{width: 100}}>Size</th>
-                    <th scope="col" style={{width: 160}}>Last Updated</th>
+                    <th scope="col" style={{width: 250}}>Created</th>
+                    <th scope="col" style={{width: 250}}>Last Modified</th>
                     <th scope="col" style={{width: 30}}>Edit</th>
                     <th scope="col" style={{width: 30}}>Delete</th>
                 </tr>
@@ -45,9 +47,12 @@ class TextFileComponent extends Component {
                             <th scope="row">{index + 1}</th>
                             <td>{it.fileName}</td>
                             <td>{it.size}</td>
-                            <td>{it.lastModified}</td>
-                            <td><i className="fa fa-pencil" aria-hidden="true">&nbsp;</i></td>
-                            <td><i className="fa fa-times" aria-hidden="true">&nbsp;</i></td>
+                            <td><Moment time={it.createdDate}/></td>
+                            <td><Moment time={it.lastModifiedDate}/></td>
+                            <td onClick={() => this.editEntry(it)}><i className="fa fa-pencil"
+                                                                      aria-hidden="true">&nbsp;</i></td>
+                            <td onClick={() => this.deleteEntry(it)}><i className="fa fa-times"
+                                                                        aria-hidden="true">&nbsp;</i></td>
                         </tr>)
                 }
                 </tbody>
@@ -57,6 +62,16 @@ class TextFileComponent extends Component {
 
     createEntry() {
         this.props.actions.createEntry();
+    }
+
+    editEntry(entry) {
+
+        this.props.actions.editEntry(entry);
+    }
+
+    deleteEntry(entry) {
+
+        this.props.actions.deleteEntry(entry);
     }
 }
 
