@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<assembly
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>bin</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <!-- include index.html, index.js -->
+        <fileSet>
+            <outputDirectory>.</outputDirectory>
+            <directory>${basedir}/build</directory>
+            <includes>
+                <include>*.*</include>
+            </includes>
+        </fileSet>
+
+        <!-- include /css/*.* -->
+        <fileSet>
+            <outputDirectory>./static/css</outputDirectory>
+            <directory>${basedir}/build/static/css</directory>
+            <includes>
+                <include>*.*</include>
+            </includes>
+        </fileSet>
+
+        <!-- include /js/*.* -->
+        <fileSet>
+            <outputDirectory>./static/js</outputDirectory>
+            <directory>${basedir}/build/static/js</directory>
+            <includes>
+                <include>*.*</include>
+            </includes>
+        </fileSet>
+
+        <!-- include /media/*.* -->
+        <fileSet>
+            <outputDirectory>./static/media</outputDirectory>
+            <directory>${basedir}/build/static/media</directory>
+            <includes>
+                <include>*.*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
