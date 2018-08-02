@@ -3,37 +3,27 @@ import _ from 'lodash';
 class RestEndpoint {
 
     /**
-     * Game REST API
+     * TextFile REST API
      */
-    createGame(id) {
+    loadEntries() {
 
-        return fetch('/game/' + id, this.createRequestParameters()).then(response => {
-            return response.json();
-        });
-    }
-
-
-    /**
-     * Game REST API
-     */
-    solveGame(id) {
-
-        return fetch('/game/' + id + '/solve', this.createRequestParameters()).then(response => {
+        return fetch('/texts/', this.createRequestParameters()).then(response => {
             return response.json();
         });
     }
 
     /**
      *
-     * @param id may not be null
-     * @param cell may not be null
+     * @param data may not be null
      * @returns {Promise<Response | never>}
      */
-    applyValue(id, cell) {
+    saveChanges(data) {
 
-        return fetch('/game/' + id, this.createRequestParameters({
-            body: JSON.stringify(cell),
-            method: 'POST'
+        let method = data.id ? 'PUT' : 'POST';
+
+        return fetch('/texts/', this.createRequestParameters({
+            body: JSON.stringify(data),
+            method: method
         })).then(response => {
             return response.json();
         });

@@ -10,10 +10,12 @@ import {Provider} from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import {Route} from 'react-router';
 import 'bootstrap-css-only/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.min.css';
 import './index.css';
 import 'ie-array-find-polyfill';
 //Polyfill to provide array.find on IE
 import {TextFileComponent} from './main/component/TextFile';
+import {TextEditorComponent} from './main/component/TextEditor';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -27,8 +29,9 @@ const store = createStore(
 
 render(<Provider store={store}>
         <ConnectedRouter history={history}>
-            <div>
+            <div className="container-fluid">
                 <Route exact path='/' component={TextFileComponent}/>
+                <Route path='/editor' component={TextEditorComponent}/>
             </div>
         </ConnectedRouter>
     </Provider>,

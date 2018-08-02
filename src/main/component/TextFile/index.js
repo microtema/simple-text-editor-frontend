@@ -1,3 +1,5 @@
 import TextFileComponent from './TextFile';
+import TextFileReducer from './TextFile.reducer';
+import * as TextFileActions from './TextFile.actions';
 
-export {TextFileComponent}
+export {TextFileComponent, TextFileReducer, TextFileActions}
