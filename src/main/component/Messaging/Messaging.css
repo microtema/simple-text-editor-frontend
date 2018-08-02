@@ -1,0 +1,10 @@
+.Messaging {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+}
+
+.Messaging .eto-messageblock {
+    margin-top: 3px;
+}

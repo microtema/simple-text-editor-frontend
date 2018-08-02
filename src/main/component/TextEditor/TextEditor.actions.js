@@ -9,16 +9,22 @@ export function saveChanges(data) {
 
         return RestEndpoint.saveChanges(data).then(response => {
 
-            if (response.status === 500) {
+            if (isErrorResponse(response)) {
+                dispatch({type: response.status, payload: response});
+            } else {
+                dispatch({
+                    type: 200,
+                    payload: {
+                        status: 200,
+                        message: 'Text File <b>' + data.fileName + '</b> successful saved',
+                        name: 'Editor'
+                    }
+                });
 
-                alert(response.message);
+                dispatch({type: Event.UPDATE, payload: {id: response, fileName: data.fileName, content: data.content}});
 
-                return;
+                dispatch(push('/'));
             }
-
-            dispatch({type: Event.UPDATE, payload: {id: response, fileName: data.fileName, content: data.content}});
-
-            dispatch(push('/'));
 
         }).catch(error => {
             throw error;
@@ -33,16 +39,22 @@ export function applyChanges(data) {
 
         return RestEndpoint.saveChanges(data).then(response => {
 
-            if (response.status === 500) {
+            if (isErrorResponse(response)) {
+                dispatch({type: response.status, payload: response});
+            } else {
+                dispatch({
+                    type: 200,
+                    payload: {
+                        status: 200,
+                        message: 'Text File <b>' + data.fileName + '</b> successful updated',
+                        name: 'Editor'
+                    }
+                });
 
-                alert(response.message);
+                data.id = response;
 
-                return;
+                dispatch({type: Event.UPDATE, payload: data});
             }
-
-            data.id = response;
-
-            dispatch({type: Event.UPDATE, payload: data});
 
         }).catch(error => {
             throw error;
@@ -57,4 +69,9 @@ export function cancel() {
 
         dispatch(push('/'));
     };
+}
+
+function isErrorResponse(response) {
+
+    return (response.status > 300 && response.status <= 500);
 }

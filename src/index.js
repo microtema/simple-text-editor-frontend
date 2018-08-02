@@ -16,6 +16,7 @@ import 'ie-array-find-polyfill';
 //Polyfill to provide array.find on IE
 import {TextFileComponent} from './main/component/TextFile';
 import {TextEditorComponent} from './main/component/TextEditor';
+import {Messaging} from './main/component/Messaging';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -32,6 +33,7 @@ render(<Provider store={store}>
             <div className="container-fluid">
                 <Route exact path='/' component={TextFileComponent}/>
                 <Route path='/editor' component={TextEditorComponent}/>
+                <Messaging/>
             </div>
         </ConnectedRouter>
     </Provider>,

@@ -54,6 +54,16 @@ export function deleteEntry(entry) {
 
         return RestEndpoint.deleteEntry(entry.id).then(response => {
             dispatch({type: Event.REMOVE, payload: entry.id});
+
+            dispatch({
+                type: 200,
+                payload: {
+                    status: 200,
+                    message: 'Text File <b>' + entry.fileName + '</b> successful deleted',
+                    name: 'Grid'
+                }
+            });
+
         }).catch(error => {
             throw error;
         });
