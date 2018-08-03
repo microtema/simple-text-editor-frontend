@@ -17,6 +17,7 @@ import 'ie-array-find-polyfill';
 import {TextFileComponent} from './main/component/TextFile';
 import {TextEditorComponent} from './main/component/TextEditor';
 import {Messaging} from './main/component/Messaging';
+import {Confirm} from './main/component/Modal';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -30,10 +31,11 @@ const store = createStore(
 
 render(<Provider store={store}>
         <ConnectedRouter history={history}>
-            <div className="container-fluid">
+            <div className="container">
                 <Route exact path='/' component={TextFileComponent}/>
                 <Route path='/editor' component={TextEditorComponent}/>
                 <Messaging/>
+                <Confirm/>
             </div>
         </ConnectedRouter>
     </Provider>,

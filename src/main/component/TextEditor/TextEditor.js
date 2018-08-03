@@ -18,13 +18,15 @@ class TextEditorComponent extends Component {
         return (<div className="TextEditor">
             <div style={{padding: 10}} onSubmit={() => false}>
                 <div className="form-group">
+                    <label htmlFor="exampleFormControlTextarea1">File Name</label>
                     <input type="text" value={this.state.fileName} onChange={(e) => this.handleFileNameChange(e)}
                            className="form-control" placeholder="File Name *.txt"/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlTextarea1">Example textarea</label>
-                    <textarea value={this.state.content} onChange={(e) => this.handleContentChange(e)}
-                              className="form-control" id="exampleFormControlTextarea1" rows="30"></textarea>
+                    <label htmlFor="exampleFormControlTextarea1">Text Editor</label>
+                    <textarea value={this.state.content}
+                              onChange={(e) => this.handleContentChange(e)}
+                              className="form-control" id="exampleFormControlTextarea1" rows="25"></textarea>
                 </div>
                 <div className="form-group">
                     <button className="btn btn-danger" onClick={() => this.cancelChanges()}>Cancel</button>

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import SearchInput, {createFilter} from 'react-search-input';
+import {createFilter} from 'react-search-input';
 import './TextFile.css';
 import * as TextFileConstants from './TextFile.constants';
 import * as TextFileActions from './TextFile.actions';
-import Moment from '../Boostrap/Moment/Moment';
+import {Moment} from '../Boostrap/Moment';
+import {ConfirmActions} from '../Modal';
 
 const KEYS_TO_FILTERS = ['fileName'];
 
@@ -48,8 +49,8 @@ class TextFileComponent extends Component {
                     <th scope="col" style={{width: 20}}>#</th>
                     <th scope="col">Name</th>
                     <th scope="col" style={{width: 100}}>Size</th>
-                    <th scope="col" style={{width: 250}}>Created</th>
-                    <th scope="col" style={{width: 250}}>Last Modified</th>
+                    <th scope="col" style={{width: 220}}>Created</th>
+                    <th scope="col" style={{width: 220}}>Last Modified</th>
                     <th scope="col" style={{width: 30}}>Edit</th>
                     <th scope="col" style={{width: 30}}>Delete</th>
                 </tr>
@@ -58,19 +59,33 @@ class TextFileComponent extends Component {
                 {
 
                     entries.map((it, index) =>
-                        <tr key={index}>
+                        <tr key={index} onDoubleClick={() => this.editEntry(it)}>
                             <th scope="row">{index + 1}</th>
                             <td>{it.fileName}</td>
                             <td>{it.size}</td>
                             <td><Moment time={it.createdDate}/></td>
                             <td><Moment time={it.lastModifiedDate}/></td>
-                            <td onClick={() => this.editEntry(it)}><i className="fa fa-pencil"
-                                                                      aria-hidden="true">&nbsp;</i></td>
-                            <td onClick={() => this.deleteEntry(it)}><i className="fa fa-times"
-                                                                        aria-hidden="true">&nbsp;</i></td>
+                            <td align="center" style={{cursor: 'pointer'}} onClick={() => this.editEntry(it)}><i
+                                className="fa fa-pencil"
+                                aria-hidden="true">&nbsp;</i></td>
+                            <td align="center" style={{cursor: 'pointer'}} onClick={() => this.deleteEntry(it)}><i
+                                className="fa fa-times"
+                                aria-hidden="true">&nbsp;</i></td>
                         </tr>)
                 }
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td style={{cursor: 'pointer'}} align="center" onClick={() => this.createEntry()}><i
+                        className="fa fa-plus" aria-hidden="true">&nbsp;</i></td>
+                </tr>
+                </tfoot>
             </table>
         </div>)
     }
@@ -86,7 +101,16 @@ class TextFileComponent extends Component {
 
     deleteEntry(entry) {
 
-        this.props.actions.deleteEntry(entry);
+        this.props.confirmActions.confirm({
+            title: 'Confirm',
+            bodyHtml: '<span>Do you want to delete <b>' + entry.fileName + '</b>?</span>',
+            execute: {
+                caption: 'Delete',
+                fn: () => {
+                    this.props.actions.deleteEntry(entry);
+                }
+            }
+        });
     }
 
     searchUpdated(e) {
@@ -105,7 +129,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 
     return {
-        actions: bindActionCreators(TextFileActions, dispatch)
+        actions: bindActionCreators(TextFileActions, dispatch),
+        confirmActions: bindActionCreators(ConfirmActions, dispatch)
     };
 }
 

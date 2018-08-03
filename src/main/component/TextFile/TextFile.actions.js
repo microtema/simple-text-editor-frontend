@@ -24,7 +24,7 @@ export function createEntry() {
         dispatch({
             type: TextEditorEvent.QUERY,
             payload: {
-                fileName: 'file-' + Math.random().toString(36).substr(2, 9) + '.txt',
+                fileName: Math.random().toString(36).substr(2, 9) + '.txt',
                 content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             }
         });
